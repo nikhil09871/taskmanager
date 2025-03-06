@@ -1,0 +1,110 @@
+/* SignUp.css */
+body, html {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Arial', sans-serif;
+  height: 100%;
+  width: 100%;
+  overflow: hidden; /* Prevent scrollbars */
+}
+
+/* Main container - Full screen with background */
+.signup-container {
+  display: flex;
+  justify-content: flex-end; /* Push the form to the right */
+  align-items: center; /* Center vertically */
+  height: 100vh; /* Full screen height */
+  width: 100vw; /* Full screen width */
+  background: url('/signup-image.jpg') no-repeat center center/cover;
+}
+
+/* Signup form styling */
+.signup-form {
+  background: rgba(0, 0, 0, 0.85); /* Dark transparent background */
+  padding: 40px;
+  border-radius: 12px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.7);
+  max-width: 400px; /* Form width */
+  width: 100%;
+  color: white;
+  margin-right: 5%; /* Push form from the right edge */
+}
+
+/* Form heading */
+.signup-form h2 {
+  margin-bottom: 20px;
+  text-align: center;
+  color: white;
+}
+
+/* Form group - Label and Input */
+.form-group {
+  margin-bottom: 20px;
+}
+
+label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 8px;
+  color: white;
+}
+
+input {
+  width: 100%;
+  padding: 12px;
+  border: none;
+  border-radius: 8px;
+  outline: none;
+  background: #222; /* Darker input background */
+  color: white;
+}
+
+/* Submit button */
+.signup-button {
+  width: 100%;
+  padding: 12px;
+  background: #4CAF50; /* Green color */
+  color: white;
+  font-size: 16px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.signup-button:hover {
+  background: #45a049; /* Darker green */
+}
+
+/* Error message */
+.error-message {
+  color: red;
+  text-align: center;
+  margin-bottom: 15px;
+}
+
+/* Redirect to Login Link */
+.redirect-login {
+  text-align: center;
+  margin-top: 15px;
+  color: #007BFF;
+  cursor: pointer;
+}
+
+.redirect-login:hover {
+  text-decoration: underline;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .signup-container {
+      justify-content: center; /* Center form on smaller screens */
+      padding: 20px;
+  }
+
+  .signup-form {
+      margin-right: 0;
+      width: 90%;
+  }
+}

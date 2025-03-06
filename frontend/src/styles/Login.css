@@ -1,0 +1,117 @@
+.login-container {
+    display: flex;
+    align-items: stretch; /* Stretch items to full height */
+    justify-content: space-between; /* Ensure both sides take equal space */
+    height: 100vh;
+    background: linear-gradient(135deg, #4e54c8, #8f94fb);
+    animation: fadeIn 1.5s ease-in-out;
+  }
+
+  .login-image {
+    flex: 1; /* Take full left width */
+    padding: 0; /* Remove padding for full coverage */
+    border-radius: 0; /* Remove border radius for full-screen effect */
+    box-shadow: none; /* Remove box shadow */
+    transition: transform 0.3s ease;
+    object-fit: cover; /* Ensure the image scales properly */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    max-width: 50%;
+    height: 100vh; /* Full screen height */
+  }
+
+  .login-image img {
+    width: 100%; /* Ensure the image fills the left side */
+    height: 100%; /* Full height */
+    border-radius: 0; /* Remove border radius */
+  }
+
+  .login-image:hover {
+    transform: scale(1.05);
+  }
+
+  .login-form {
+    flex: 1; /* Take half width */
+    padding: 2rem;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    border-radius: 12px;
+    background: #357ab7; /* Blue background */
+    animation: slideIn 1s ease-in-out;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    max-width: 50%;
+  }
+
+  h2 {
+    margin-bottom: 1.5rem;
+    color: white;
+    text-align: center;
+    font-size: 2rem;
+  }
+
+  .error-message {
+    color: red;
+    margin-bottom: 1rem;
+    text-align: center;
+  }
+
+  .form-group {
+    margin-bottom: 1.5rem;
+  }
+
+  label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: bold;
+    color: white;
+  }
+
+  input {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: border 0.3s ease;
+  }
+
+  input:focus {
+    border-color: #4a90e2;
+    outline: none;
+  }
+
+  .login-button {
+    width: 100%;
+    padding: 0.75rem;
+    background: linear-gradient(90deg, #4a90e2, #357ab7);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background 0.3s ease;
+  }
+
+  .login-button:hover {
+    background: linear-gradient(90deg, #357ab7, #2a5fa8);
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+  @keyframes slideIn {
+    from {
+      transform: translateY(50px);
+    }
+    to {
+      transform: translateY(0);
+    }
+  }

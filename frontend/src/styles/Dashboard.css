@@ -1,0 +1,183 @@
+/* src/styles/Dashboard.css */
+body, html {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  height: 100%;
+  width: 100%;
+  overflow: hidden; /* Prevent unwanted scrollbars */
+}
+
+/* Main Dashboard Container */
+.dashboard-container {
+  display: flex; /* Flex layout for side-by-side sections */
+  height: 100vh; /* Full viewport height */
+  width: 100vw; /* Full viewport width */
+  background: #f4f6f9; /* Light background */
+  overflow: hidden; /* Prevent page overflow */
+}
+
+/* Employee Profile (Left Sidebar) */
+.employee-profile {
+  padding: 2rem;
+  background: #4e54c8; /* Purple sidebar */
+  color: white;
+  width: 25%;
+  text-align: center;
+  box-shadow: 4px 0 8px rgba(0, 0, 0, 0.1);
+  overflow-y: auto; /* Enable scrolling if content overflows */
+}
+
+/* Task Section (Right Content Area) */
+.task-section {
+  flex: 1; /* Takes remaining space */
+  display: flex;
+  flex-direction: column; /* Stack content vertically */
+  padding: 2rem;
+  background: #ffffff; /* White background */
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  overflow-y: auto; /* Enables internal scrolling */
+}
+
+/* Buttons (Add Task, Logout) */
+.add-task-button, .logout-button {
+  margin-top: 1rem;
+  padding: 0.8rem 1.5rem;
+  background: #2196F3; /* Blue */
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.add-task-button:hover, .logout-button:hover {
+  background: #1976D2; /* Darker blue */
+}
+
+/* Task Form Input and Textarea */
+.task-form input, .task-form textarea {
+  display: block; /* Ensures block-level display */
+  margin: 1rem 0; /* Spacing between inputs */
+  width: 100%;
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+}
+
+/* Task List */
+.task-list {
+  margin-top: 2rem;
+  max-height: 400px; /* Limit task list height */
+  overflow-y: auto; /* Enable scrolling */
+}
+
+/* Individual Task Item */
+.task-item {
+  border-radius: 12px;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  background: #90caf9; /* Light blue */
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Task Item Headers */
+.task-item h3 {
+  margin: 0;
+  color: #0d47a1; /* Dark blue */
+}
+
+/* Task Item Text */
+.task-item p {
+  margin: 0.5rem 0;
+  color: #1a237e; /* Deep blue */
+}
+
+/* Calendar Date Highlights */
+.highlight {
+  background-color: #4caf50;
+  color: white;
+  border-radius: 50%;
+}
+
+.react-calendar .highlight {
+  background-color: #4CAF50;
+  color: white;
+  border-radius: 50%;
+}
+
+/* Calendar Scrollable Container */
+.react-calendar__tile {
+  position: relative;
+}
+
+/* Calendar Active Date Fix */
+.react-calendar__tile--active {
+  background: transparent !important;
+}
+
+/* Highlight Start and End Dates */
+.start-date-highlight {
+  background-color: #2196F3 !important; /* Blue */
+  color: white !important;
+  border-radius: 50%;
+}
+
+.end-date-highlight {
+  background-color: #F44336 !important; /* Red */
+  color: white !important;
+  border-radius: 50%;
+}
+
+/* Improved Label Visibility */
+.task-form label {
+  color: black; /* Ensure labels are visible */
+  font-weight: bold; /* Enhance label readability */
+  margin-top: 0.5rem; /* Better spacing */
+  display: block; /* Ensure block-level display */
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+  .employee-profile {
+      width: 30%; /* Adjust sidebar width */
+  }
+
+  .task-section {
+      padding: 1.5rem; /* Less padding */
+  }
+}
+
+@media (max-width: 768px) {
+  .dashboard-container {
+      flex-direction: column; /* Stack sections vertically */
+  }
+
+  .employee-profile {
+      width: 100%; /* Full width */
+      box-shadow: none; /* Remove side shadow */
+  }
+
+  .task-section {
+      flex: 1; /* Full height */
+  }
+}
+
+@media (max-width: 480px) {
+  .task-form input, .task-form textarea {
+      padding: 0.4rem; /* Smaller padding */
+  }
+
+  .add-task-button, .logout-button {
+      padding: 0.6rem 1rem; /* Smaller buttons */
+  }
+}
+
+/* Employee Dashboard Title */
+.dashboard-title {
+  font-size: 2rem; /* Large font size */
+  color: black; /* Black color */
+  text-align: center; /* Centered heading */
+  margin-bottom: 1.5rem; /* Space below the title */
+}
