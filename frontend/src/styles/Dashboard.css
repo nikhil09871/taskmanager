@@ -181,3 +181,155 @@ body, html {
   text-align: center; /* Centered heading */
   margin-bottom: 1.5rem; /* Space below the title */
 }
+
+
+
+
+
+/* Dashboard Container Styling */
+.dashboard-container {
+  display: flex;
+  min-height: 100vh;
+  background: #f9f9f9;
+}
+
+/* Sidebar (Profile Section) */
+.employee-profile {
+  padding: 20px;
+  background: #2c3e50;
+  color: white;
+  width: 300px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.logout-button {
+  margin-top: 20px;
+  padding: 10px 15px;
+  background: #e74c3c;
+  color: white;
+  border: none;
+  cursor: pointer;
+  border-radius: 8px;
+}
+
+.logout-button:hover {
+  background: #c0392b;
+}
+
+/* Main Task Section */
+.task-section {
+  flex: 1;
+  padding: 40px;
+  overflow-y: auto; /* Enable scroll for entire section if content is large */
+}
+
+.dashboard-title {
+  font-size: 2rem;
+  color: #2c3e50;
+}
+
+/* Add Task Form */
+.task-form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  background: white;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.task-form input,
+.task-form select,
+.task-form textarea {
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+}
+
+/* Task List Section */
+.task-list {
+  max-height: 500px; /* Limit the height */
+  overflow-y: auto; /* Add vertical scroll */
+  margin-top: 20px;
+  padding-right: 10px; /* Ensure scrollbar doesn't overlap content */
+}
+
+/* Task Item Styling */
+.task-item {
+  border: 1px solid #ddd;
+  padding: 15px;
+  border-radius: 10px;
+  margin-bottom: 15px;
+  background: white;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.task-item h3 {
+  margin: 0;
+  color: #34495e;
+}
+
+.task-item p {
+  margin: 5px 0;
+  color: #7f8c8d;
+}
+
+/* Buttons */
+.add-task-toggle {
+  padding: 10px 20px;
+  margin: 20px 0;
+  background: #3498db;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.add-task-toggle:hover {
+  background: #2980b9;
+}
+
+.add-task-button,
+.cancel-button {
+  padding: 10px 15px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.add-task-button {
+  background: #2ecc71;
+  color: white;
+}
+
+.cancel-button {
+  background: #e74c3c;
+  color: white;
+}
+
+.add-task-button:hover {
+  background: #27ae60;
+}
+
+.cancel-button:hover {
+  background: #c0392b;
+}
+
+.profile-picture {
+  margin-left: 70px; /* Adjust left alignment */
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .dashboard-container {
+    flex-direction: column;
+  }
+
+  .employee-profile {
+    width: 100%;
+    text-align: center;
+  }
+}

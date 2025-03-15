@@ -38,6 +38,21 @@ const Login = () => {
     navigate("/signup");
   };
 
+  const handleAdminRedirect = () => {
+    navigate("/admin-login");
+  };
+
+  const handleForgotPassword = async () => {
+    if (!email) return alert("Enter your admin email");
+  
+    try {
+      await axios.post("http://localhost:5000/api/auth/forgot-password", { email });
+      alert("Reset link sent to your email");
+    } catch (err) {
+      alert("Error sending reset link");
+    }
+  };
+
   return (
     <div className="login-container">
       <div className="login-image">
@@ -45,7 +60,7 @@ const Login = () => {
       </div>
 
       <div className="login-form">
-        <h2>Employee Login</h2>
+        <h2>Zudio Employee Login</h2>
         
         {error && <p className="error-message">{error}</p>}
 
@@ -75,6 +90,14 @@ const Login = () => {
 
         <button onClick={handleSignUpRedirect} className="login-button">
           Sign Up
+        </button>
+
+        <button onClick={handleAdminRedirect} className="login-button">
+          Admin login
+        </button>
+
+        <button onClick={handleForgotPassword} className="login-button">
+          Forgot Password?
         </button>
       </div>
     </div>

@@ -18,8 +18,7 @@ const taskSchema = new mongoose.Schema({
   unit: {
     type: String,
     required: true,
-    enum: [ "days", "months"], // Add other units if needed
-    
+    enum: ["days", "months"], // Add other units if needed
   },
   description: {
     type: String,
@@ -33,9 +32,15 @@ const taskSchema = new mongoose.Schema({
     type: Date,
     required: true,
   },
+  status: {
+    type: String,
+    enum: ["pending", "approved", "rejected"],
+    default: "pending", // Automatically set "pending" for new tasks
+  },
 });
 
 module.exports = mongoose.model("Task", taskSchema);
+
 
 
 

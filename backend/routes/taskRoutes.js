@@ -85,6 +85,33 @@ router.delete("/delete/:id", authenticateUser, async (req, res) => {
   }
 });
 
+
+// routes/authRoutes.js (Example)
+router.get('/profile', authenticateUser, async (req, res) => {
+  try {
+    const user = await User.findById(req.user.id).select('name role');
+    res.status(200).json(user);
+  } catch (error) {
+    res.status(500).json({ error: 'Failed to fetch user profile' });
+  }
+});
+
+// In routes/taskRoutes.js
+router.delete('/:taskId', authenticateUser , async (req, res) => {
+  try {
+    const { taskId } = req.params;
+    const task = await Task.findByIdAndDelete(taskId);
+
+    if (!task) return res.status(404).json({ error: 'Task not found' });
+
+    res.status(200).json({ message: 'Task deleted successfully' });
+  } catch (error) {
+    res.status(500).json({ error: 'Server error while deleting task' });
+  }
+});
+
+
+
 module.exports = router;
 
 

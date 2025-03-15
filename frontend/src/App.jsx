@@ -5,6 +5,9 @@ import AdminLogin from "./components/admin-login.jsx";
 import Dashboard from "./components/Dashboard.jsx";
 import AdminDashboard from "./components/AdminDashboard.jsx";
 import Signup from "./components/SignUp.jsx";
+import ResetPassword from "./components/ResetPassword.jsx";
+import AdminResetPassword from "./components/AdminResetPassword";
+
 
 const App = () => {
   return (
@@ -14,6 +17,8 @@ const App = () => {
       <Route path="/admin-login" element={<AdminLogin />} />
       <Route path="/dashboard" element={<Dashboard />} />
       <Route path="/admin-dashboard" element={<AdminDashboard />} />
+      <Route path="/reset-password/:token" element={<ResetPassword />} />
+      <Route path="/admin/reset-password/:token" element={<AdminResetPassword />} />
     </Routes>
   );
 };
@@ -23,4 +28,4 @@ export default App;
 
 
 
-//mongodb+srv://user1:Nikhil@045@cluster1.1c4ye.mongodb.net/?retryWrites=true&w=majority&appName=Cluster1
+//mongodb+srv://user1:Nikhil@cluster1.1c4ye.mongodb.net/?retryWrites=true&w=majority&appName=Cluster1
