@@ -5,6 +5,7 @@ const authRoutes = require("./routes/authRoutes");
 const taskRoutes = require("./routes/taskRoutes");
 const adminRoutes = require("./routes/adminRoutes");
 const bodyParser = require("express");
+const videoCallRoutes = require('./routes/videoCallRoutes');
 
 const cors = require("cors");
 
@@ -40,6 +41,7 @@ app.use("/api/auth", authRoutes);
 app.use("/api/tasks", taskRoutes);
 app.use("/uploads", express.static("uploads"));
 app.use("/api/admin", adminRoutes);
+app.use('/api/videocall', videoCallRoutes);
 
 
 

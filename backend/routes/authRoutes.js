@@ -12,6 +12,7 @@ const nodemailer = require("nodemailer");
 const crypto = require("crypto");
 const sendResetEmail = require ("../utils/sendEmail.js");
 const  sendAdminResetEmail = require ( "../utils/emailService.js");
+const authenticateAdmin1 = require("../middleware/authenticateAdmin");
 
 require("dotenv").config();
 
@@ -180,6 +181,7 @@ router.post("/admin/login", async (req, res) => {
       message: "Admin login successful",
       admin: { id: admin._id, name: admin.name, email: admin.email },
       token,
+      
     });
   } catch (error) {
     console.error("Admin Login Error:", error);
@@ -396,206 +398,39 @@ router.post("/admin/reset-password", async (req, res) => {
   }
 });
 
-module.exports = router;
-
-
-
-
-
-
-
-
-
-
-/*2nd code*/
-/*const express = require("express");
-const router = express.Router();
-const bcrypt = require("bcryptjs");
-const jwt = require("jsonwebtoken");
-const User = require("../models/User");
-require("dotenv").config();
-
-// Generate JWT Token Function
-const generateToken = (userId) => {
-  return jwt.sign({ id: userId }, process.env.JWT_SECRET, { expiresIn: "1h" });
-};
-
-// Signup Route
-router.post("/signup", async (req, res) => {
-  const { name, email, password, role } = req.body;
-  console.log("📤 Signup Request Data:", req.body);
-
+// Example Route in Backend (Express)
+router.get("/admin/profile", authenticateAdmin1, async (req, res) => {
   try {
-    const existingUser = await User.findOne({ email });
-    if (existingUser) {
-      console.error("🚫 User already exists");
-      return res.status(400).json({ message: "User already exists" });
+    console.log("🔍 Fetching admin profile for ID:", req.user.id);
+    const admin = await Admin.findById(req.user.id).select("-password");
+
+    if (!admin) {
+      return res.status(404).json({ message: "Admin not found" });
     }
+    console.log("Fetching admin with ID:", req.user.id);
 
-    // Hash password
-    const hashedPassword = await bcrypt.hash(password, 10);
-    console.log("🔐 Hashed Password:", hashedPassword);
-
-    const newUser = new User({ name, email, password: hashedPassword, role });
-    await newUser.save();
-
-    // Generate token
-    const token = generateToken(newUser._id);
-
-    console.log("✅ User registered successfully");
-    res.status(201).json({
-      message: "User registered successfully",
-      user: {
-        id: newUser._id,
-        name: newUser.name,
-        email: newUser.email,
-        role: newUser.role,
-      },
-      token,
-    });
+    res.status(200).json(admin);
   } catch (error) {
-    console.error("❌ Signup Error:", error);
-    res.status(500).json({ message: "Internal server error" });
-  }
-});
-
-// Login Route
-router.post("/login", async (req, res) => {
-  try {
-    const { email, password } = req.body;
-    console.log("🔍 Login Request Data:", { email, password });
-
-    const user = await User.findOne({ email });
-
-    if (!user) {
-      console.error("❌ User not found");
-      return res.status(400).json({ message: "User not found" });
-    }
-
-    console.log("✅ Stored Hashed Password:", user.password);
-
-    // Compare passwords
-    const isMatch = await bcrypt.compare(password, user.password);
-    console.log("🔍 Password Match Status:", isMatch);
-
-    if (!isMatch) {
-      return res.status(400).json({ message: "Invalid credentials" });
-    }
-
-    // Generate JWT Token
-    const token = generateToken(user._id);
-
-    res.status(200).json({
-      message: "Login successful",
-      user: {
-        id: user._id,
-        name: user.name,
-        email: user.email,
-        role: user.role,
-      },
-      token,
-    });
-  } catch (error) {
-    console.error("❌ Error during login:", error);
+    console.error("❌ Admin Profile Fetch Error:", error);
     res.status(500).json({ message: "Internal Server Error" });
   }
 });
 
-module.exports = router;*/
+router.get("/users", async (req, res) => {
+  try {
+    const users = await User.find().select("-password"); // Exclude passwords
+    res.status(200).json(users);
+  } catch (error) {
+    console.error("Error fetching users:", error);
+    res.status(500).json({ message: "Internal Server Error" });
+  }
+});
+
+
+module.exports = router;
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-/*const express = require("express");
-const router = express.Router();
-const bcrypt = require("bcryptjs");
-const jwt = require("jsonwebtoken");
-const User = require("../models/User");
-require("dotenv").config();
-
-// Signup Route
-router.post("/signup", async (req, res) => {
-    const { name, email, password, role } = req.body;
-    console.log("📤 Signup Request Data:", req.body); // Log incoming request
-  
-    try {
-      const existingUser = await User.findOne({ email });
-      if (existingUser) {
-        console.error("🚫 User already exists");
-        return res.status(400).json({ message: "User already exists" });
-      }
-  
-      // Hash password
-      const hashedPassword = await bcrypt.hash(password, 10);
-      console.log("🔐 Hashed Password:", hashedPassword);
-  
-      const newUser = new User({ name, email, password: hashedPassword, role });
-      await newUser.save();
-  
-      console.log("✅ User registered successfully");
-      res.status(201).json({ message: "User registered successfully" });
-    } catch (error) {
-      console.error("❌ Signup Error:", error);
-      res.status(500).json({ message: "Internal server error" });
-    }
-  });
-  
-
-// Login Route
-
-
-// POST: User Login
-// Login Route
-router.post("/login", async (req, res) => {
-    try {
-      const { email, password } = req.body;
-      console.log("🔍 Login Request Data:", { email, password });
-  
-      const user = await User.findOne({ email });
-  
-      if (!user) {
-        console.error("❌ User not found");
-        return res.status(400).json({ message: "User not found" });
-      }
-  
-      console.log("✅ Stored Hashed Password:", user.password);
-  
-      // Compare passwords
-      const isMatch = await bcrypt.compare(password, user.password);
-      console.log("🔍 Password Match Status:", isMatch);
-  
-      if (!isMatch) {
-        return res.status(400).json({ message: "Invalid credentials" });
-      }
-  
-      res.status(200).json({
-        message: "Login successful",
-        user: {
-          id: user._id,
-          name: user.name,
-          email: user.email,
-          role: user.role,
-        },
-      });
-    } catch (error) {
-      console.error("❌ Error during login:", error);
-      res.status(500).json({ message: "Internal Server Error" });
-    }
-  });
-  
-
-module.exports = router;*/
 
 
 

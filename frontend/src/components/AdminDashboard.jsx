@@ -4,10 +4,28 @@ import axios from "axios";
 import "../styles/AdminDashboard.css";
 
 const AdminDashboard = () => {
+  const [admin, setAdmin] = useState(null);
   const [users, setUsers] = useState([]);
   const [tasks, setTasks] = useState([]);
   const [approvedTasks, setApprovedTasks] = useState([]);
+  const [isDarkMode, setIsDarkMode] = useState(
+    localStorage.getItem("darkMode") === "true"
+  );
+
+  const [showCreateGroupForm, setShowCreateGroupForm] = useState(false);
+const [selectedProject, setSelectedProject] = useState("");
+const [selectedUsers, setSelectedUsers] = useState([{ email: "", role: "" }]);
+
   const navigate = useNavigate();
+
+
+  useEffect(() => {
+    if (isDarkMode) {
+      document.body.classList.add("dark");
+    } else {
+      document.body.classList.remove("dark");
+    }
+  }, [isDarkMode]);
 
   // Ensure admin is authenticated
   useEffect(() => {
@@ -46,7 +64,11 @@ const AdminDashboard = () => {
       }
     };
   
+    
+
+    
     fetchData();
+    
   }, [navigate]); // Dependency array should only include navigate
 
   // Handle Admin Logout
@@ -54,6 +76,8 @@ const AdminDashboard = () => {
     localStorage.removeItem("adminToken");
     navigate("/admin-login");
   };
+
+  
 
   // Delete User
   const handleDeleteUser = async (userId) => {
@@ -92,6 +116,51 @@ const AdminDashboard = () => {
     }
   };
 
+  const handleAddUser = () => {
+    setSelectedUsers([...selectedUsers, { email: "", role: "" }]);
+  };
+  
+  const handleUserChange = (index, field, value) => {
+    const updatedUsers = [...selectedUsers];
+    updatedUsers[index][field] = value;
+    setSelectedUsers(updatedUsers);
+  };
+  
+  const handleCreateGroup = async () => {
+    const token = localStorage.getItem("adminToken"); // Correct key
+
+  
+    if (!token) {
+      console.error("No token found. Please login.");
+      alert("No token found. Please login.");
+      return;
+    }
+  
+    try {
+      const response = await axios.post(
+        "http://localhost:5000/api/admin/create-group",
+        {
+          projectTitle: selectedProject, // Ensure this is set properly
+          users: selectedUsers,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        }
+      );
+  
+      console.log("Group created:", response.data);
+      alert("Group created successfully!");
+    } catch (error) {
+      console.error("Error creating group:", error.response?.data || error.message);
+      alert("Error: " + (error.response?.data?.message || error.message));
+    }
+  };
+  
+  
+
   // Update Task Status (Approve/Reject)
   const handleTaskDecision = async (taskId, decision) => {
     try {
@@ -118,16 +187,73 @@ const AdminDashboard = () => {
     }
   };
 
+  const toggleDarkMode = () => {
+    setIsDarkMode((prev) => {
+      localStorage.setItem("darkMode", !prev);
+      return !prev;
+    });
+  };
+
   return (
     <div className="admin-dashboard-container">
       {/* Sidebar */}
       <div className="admin-sidebar">
         <img src="/images/admin-image.jpg" alt="Admin" className="admin-image" />
         <h2>Admin Panel</h2>
+        
+        
         <button onClick={handleLogout} className="logout-button">
           Logout
         </button>
+
+        <div className="admin-buttons">
+          <button onClick={toggleDarkMode} className="theme-toggle-btn">
+            {isDarkMode ? "Light Mode" : "Dark Mode"}
+          </button>
+          </div>
+          <div className="admin-buttons">
+      <button onClick={() => setShowCreateGroupForm(!showCreateGroupForm)}>
+  {showCreateGroupForm ? "Cancel" : "Create Group"}
+</button>
+</div>
       </div>
+   
+
+{showCreateGroupForm && (
+  <div className="create-group-form">
+    <label>Project Title:</label>
+    <select value={selectedProject} onChange={(e) => setSelectedProject(e.target.value)}>
+      <option value="">Select Project</option>
+      {approvedTasks.map((task) => (
+        <option key={task._id} value={task.name}>{task.name}</option>
+      ))}
+    </select>
+
+    {selectedUsers.map((user, index) => (
+      <div key={index} className="user-row">
+        <label>User Email:</label>
+        <select value={user.email} onChange={(e) => handleUserChange(index, "email", e.target.value)}>
+          <option value="">Select User</option>
+          {users.map((u) => (
+            <option key={u._id} value={u.email}>{u.email}</option>
+          ))}
+        </select>
+
+        <label>Role:</label>
+        <input
+          type="text"
+          value={user.role}
+          onChange={(e) => handleUserChange(index, "role", e.target.value)}
+          placeholder="Assign Role"
+        />
+      </div>
+    ))}
+
+    <button onClick={handleAddUser}>Add More Users</button>
+    <button onClick={handleCreateGroup}>Submit</button>
+  </div>
+)}
+
 
       {/* Main Content */}
       <div className="admin-content">

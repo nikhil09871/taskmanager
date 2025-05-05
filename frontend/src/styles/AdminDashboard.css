@@ -3,6 +3,7 @@
   display: flex;
   height: 100vh;
   background: url('/images/admin-bg1.jpg') no-repeat center center/cover;
+  transition: background 0.3s, color 0.3s;
 }
 
 /* Sidebar styling */
@@ -15,6 +16,7 @@
   align-items: center;
   padding: 20px;
   box-shadow: 2px 0 10px rgba(0, 0, 0, 0.2);
+  transition: background 0.3s, color 0.3s;
 }
 
 /* Admin profile image */
@@ -26,9 +28,17 @@
   border: 4px solid white;
 }
 
+/* Buttons section (logout + dark mode) */
+.admin-buttons {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  margin-top: 20px;
+}
+
 /* Logout button */
 .logout-button {
-  margin-top: auto;
   padding: 10px 20px;
   background: #e74c3c;
   color: white;
@@ -36,9 +46,28 @@
   border-radius: 8px;
   cursor: pointer;
   transition: background 0.3s;
+  width: 100%;
+  text-align: center;
 }
+
 .logout-button:hover {
   background: #c0392b;
+}
+
+/* Dark Mode Toggle Button */
+.theme-toggle-btn {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 10px;
+  cursor: pointer;
+  border-radius: 8px;
+  width: 100%;
+  text-align: center;
+}
+
+.theme-toggle-btn:hover {
+  background-color: #0056b3;
 }
 
 /* Main content area */
@@ -47,7 +76,8 @@
   padding: 20px;
   overflow-y: auto;
   max-width: calc(100vw - 250px);
-  scrollbar-width: thin; /* For Firefox */
+  scrollbar-width: thin;
+  transition: background 0.3s, color 0.3s;
 }
 
 /* Custom scrollbar for modern look */
@@ -81,7 +111,7 @@ h1, h2 {
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   background: rgba(255, 255, 255, 0.95);
-  transition: transform 0.3s;
+  transition: background 0.3s;
 }
 
 .task-card:hover, .employee-card:hover {
@@ -132,53 +162,98 @@ body, html {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  overflow-x: hidden; /* Prevent horizontal scrolling */
+  overflow-x: hidden;
 }
 
-/* Main container covering the full screen */
+/* Sidebar dark mode */
+.dark .admin-sidebar {
+  background-color: #333;
+  color: #f5f5f5;
+}
+
+/* Main Content Dark Mode */
+.dark .admin-dashboard-container {
+  background-color: #181818;
+}
+
+.dark .admin-content {
+  background: #222;
+  color: #f5f5f5;
+}
+
+/* Dark mode task cards */
+.dark .task-card, .dark .employee-card {
+  background-color: #333;
+  color: #f5f5f5;
+}
+
+/* Dark mode scrollbar */
+.dark .admin-content::-webkit-scrollbar-track {
+  background: #444;
+}
+
+.dark .admin-content::-webkit-scrollbar-thumb {
+  background: #666;
+}
+
+/* Ensure full viewport width and height */
 .admin-dashboard-container {
   display: flex;
   height: 100vh;
-  width: 100vw; /* Ensure full viewport width */
+  width: 100vw; /* Full width */
+  background: url('/images/admin-bg1.jpg') no-repeat center center/cover;
+  transition: background 0.3s, color 0.3s;
 }
 
-/* Sidebar styling */
+/* Sidebar */
 .admin-sidebar {
   width: 250px;
-  background: #2c3e50;
+  background: rgba(44, 62, 80, 0.9);
   color: white;
   display: flex;
   flex-direction: column;
   align-items: center;
   padding: 20px;
+  height: 100vh; /* Full height */
+  box-shadow: 2px 0 10px rgba(0, 0, 0, 0.2);
+  transition: background 0.3s, color 0.3s;
 }
 
-/* Main content section */
+/* Main Content */
 .admin-content {
-  flex: 1;
+  flex-grow: 1;  /* Takes full remaining width */
+  height: 100vh;
   padding: 20px;
-  overflow-y: auto; /* Vertical scroll only */
+  overflow-y: auto;
   background: url('/images/admin-bg.jpg') no-repeat center center;
-  background-size: cover; /* Ensure full coverage */
+  background-size: cover;
+  transition: background 0.3s, color 0.3s;
 }
 
-/* Ensure cards fit within the content area */
-.task-card, .employee-card {
-  max-width: 90%; /* Adjust width to prevent overflow */
-  margin: 0 auto 20px; /* Center cards horizontally */
+/* Dark Mode Fixes */
+.dark .admin-dashboard-container {
+  background-color: #181818;
 }
 
-/* Scrollbar appearance */
-::-webkit-scrollbar {
-  width: 8px; /* Slim scrollbar */
+.dark .admin-content {
+  background-color: #222;
+  color: #f5f5f5;
 }
 
-/* Admin Dashboard Title */
-h1 {
-  color: white; /* Change Admin Dashboard text to white */
+/* Admin Info Styling */
+.admin-info {
+  text-align: center;
+  margin-bottom: 10px;
 }
 
-/* Employee List Section Title */
-h2 {
-  color: white; /* Change Employee List text to white */
+.admin-info h3 {
+  color: #fff;
+  font-size: 1.2rem;
+  margin: 5px 0;
+}
+
+.admin-role {
+  color: #f0a500;
+  font-size: 1rem;
+  font-weight: bold;
 }

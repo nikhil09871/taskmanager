@@ -7,6 +7,8 @@ import AdminDashboard from "./components/AdminDashboard.jsx";
 import Signup from "./components/SignUp.jsx";
 import ResetPassword from "./components/ResetPassword.jsx";
 import AdminResetPassword from "./components/AdminResetPassword";
+import VideoCall from "./components/VideoCall.jsx";
+
 
 
 const App = () => {
@@ -19,6 +21,8 @@ const App = () => {
       <Route path="/admin-dashboard" element={<AdminDashboard />} />
       <Route path="/reset-password/:token" element={<ResetPassword />} />
       <Route path="/admin/reset-password/:token" element={<AdminResetPassword />} />
+      <Route path="/videocall/:roomId" element={<VideoCall />} />
+
     </Routes>
   );
 };

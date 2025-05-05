@@ -7,6 +7,7 @@ const Task = require("../models/Task");
 const authenticateUser = require("../middleware/authMiddleware");
 const sendAdminResetEmail = require("../utils/emailService");
 const bcrypt = require("bcryptjs");
+const authenticateAdmin1 = require("../middleware/authenticateAdmin");
 
 
 const crypto = require("crypto");
@@ -267,6 +268,30 @@ router.post("/reset-password", async (req, res) => {
   } catch (error) {
     console.error("🔥 Admin Reset Password Error:", error);
     res.status(500).json({ message: "Internal server error" });
+  }
+});
+
+router.post('/create-group', authenticateAdmin1, async (req, res) => {
+  const { projectTitle, users } = req.body;
+
+  if (!projectTitle || !users || users.length === 0) {
+    return res.status(400).json({ message: 'All fields are required' });
+  }
+
+  try {
+    const task = await Task.findOne({ 
+      name: { $regex: new RegExp(`^${projectTitle.trim()}$`, 'i') }, 
+      status: 'approved' 
+    });
+
+    if (!task) {
+      return res.status(404).json({ message: 'Task not found' });
+    }
+
+    res.status(201).json({ message: 'Group created successfully' });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Internal server error' });
   }
 });
 
