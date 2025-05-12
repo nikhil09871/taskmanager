@@ -32,7 +32,7 @@ const SignUp = () => {
     try {
       console.log("🔍 Sending Data:", formData); // Log form data before sending
     
-      const response = await axios.post("http://localhost:5000/api/auth/signup", formData, {
+      const response = await axios.post(`${import.meta.env.VITE_API_URL}/auth/signup`, formData, {
         headers: { "Content-Type": "application/json" },
         withCredentials: true, // Only if you need cookies/session
       });
