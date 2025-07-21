@@ -114,13 +114,20 @@ pipeline {
     }
 
     post {
-        failure {
-            mail to: 'you@example.com',
-                 subject: "❌ Jenkins Build Failed: ${env.JOB_NAME}",
-                 body: "Build ${env.BUILD_NUMBER} failed. Check the Jenkins logs for details."
-        }
-        always {
-            echo "📜 Build finished with status: ${currentBuild.currentResult}"
-        }
+    failure {
+        slackSend (
+            channel: '#jenkins-alerts',
+            color: 'danger',
+            message: "❌ Build Failed: ${env.JOB_NAME} #${env.BUILD_NUMBER} \nDetails: ${env.BUILD_URL}"
+        )
     }
+
+    success {
+        slackSend (
+            channel: '#jenkins-alerts',
+            color: 'good',
+            message: "✅ Build Passed: ${env.JOB_NAME} #${env.BUILD_NUMBER} \nDetails: ${env.BUILD_URL}"
+        )
+    }
+}
 }
