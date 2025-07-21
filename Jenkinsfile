@@ -54,18 +54,18 @@ pipeline {
             }
         }
 
-        stage('Security Scan') {
+       stage('Security Scan') {
     steps {
         withCredentials([string(credentialsId: 'SNYK_TOKEN', variable: 'SNYK_TOKEN')]) {
             echo "🔒 Running Snyk scan for backend and frontend dependencies..."
             sh '''
-                npm install -g snyk
-                cd frontend && snyk test || echo "Frontend vulnerabilities found"
-                cd ../backend && snyk test || echo "Backend vulnerabilities found"
+                cd frontend && npm install snyk && npx snyk test || echo "Frontend vulnerabilities found"
+                cd ../backend && npm install snyk && npx snyk test || echo "Backend vulnerabilities found"
             '''
         }
     }
 }
+
 
         stage('Build Docker Images') {
             steps {
