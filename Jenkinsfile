@@ -55,11 +55,17 @@ pipeline {
         }
 
         stage('Security Scan') {
-            steps {
-                echo "🔒 Running dependency vulnerability scan (simulate)..."
-                sh 'echo "Use Snyk/OWASP here..."'
-            }
+    steps {
+        withCredentials([string(credentialsId: 'SNYK_TOKEN', variable: 'SNYK_TOKEN')]) {
+            echo "🔒 Running Snyk scan for backend and frontend dependencies..."
+            sh '''
+                npm install -g snyk
+                cd frontend && snyk test || echo "Frontend vulnerabilities found"
+                cd ../backend && snyk test || echo "Backend vulnerabilities found"
+            '''
         }
+    }
+}
 
         stage('Build Docker Images') {
             steps {
